@@ -20,12 +20,11 @@ const Keyboard = {
   },
 
   init() {
-
-    this.properties.state = sessionStorage.getItem('layout').substr(0, 2) || 'en';
-    //this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
-    //console.log(this.properties.state);
-    //console.log(this.properties.capsLock);
-    //this.properties.value = sessionStorage.getItem('value') || '';
+    this.properties.state = (sessionStorage.getItem('layout')) ? sessionStorage.getItem('layout').substr(0, 2) : 'en';
+    // this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
+    // console.log(this.properties.state);
+    // console.log(this.properties.capsLock);
+    // this.properties.value = sessionStorage.getItem('value') || '';
 
     // Create keys data arrays
     const keyLayout = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Enter', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Backslash', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
@@ -38,6 +37,7 @@ const Keyboard = {
 
     // Create layout object
     const layout = {};
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < keyLayout.length; ++i) {
       layout[keyLayout[i]] = {
         en: en[i],
@@ -69,8 +69,6 @@ const Keyboard = {
     this.open(document.querySelector('.keyboard-input').value, (currentValue) => {
       document.querySelector('.keyboard-input').value = currentValue;
     });
-
-
   },
 
 
@@ -134,14 +132,14 @@ const Keyboard = {
     });
 
     document.addEventListener('mousedown', (e) => {
-      //e.preventDefault();
+      // e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
         this.eventChecker(e.target.id, e.target);
       }
     });
 
     document.addEventListener('mouseup', (e) => {
-      //e.preventDefault();
+      // e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
         this.eventCheckerUp(e.target.id, e.target);
       }
@@ -208,7 +206,6 @@ const Keyboard = {
         break;
 
       case 'ControlLeft':
-        //console.log(e);
         if (e.shiftKey === true) {
           this.switchLayout();
         }
@@ -243,7 +240,7 @@ const Keyboard = {
   },
 
   switchLayout() {
-    let st = this.properties.state.substr(0, 2);
+    const st = this.properties.state.substr(0, 2);
     if (st !== 'ru') {
       this.properties.state = this.properties.state.replace('en', 'ru');
     } else {
@@ -269,7 +266,7 @@ const Keyboard = {
       if (el.childElementCount === 0) {
         el.textContent = this.layout[el.id][this.properties.state];
       }
-    })
+    });
   },
 
   shiftDown() {
@@ -290,7 +287,7 @@ const Keyboard = {
     this.properties.value = initialValue || '';
     this.eventHandlers.oninput = oninput;
     this.eventHandlers.onclose = onclose;
-    //sessionStorage.setItem('value', this.properties.value);
+    // sessionStorage.setItem('value', this.properties.value);
   },
 
   close() {
@@ -302,5 +299,4 @@ const Keyboard = {
 
 window.addEventListener('DOMContentLoaded', () => {
   Keyboard.init();
-
 });
