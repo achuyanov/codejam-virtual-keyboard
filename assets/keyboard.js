@@ -86,9 +86,18 @@ const Keyboard = {
       keyElement.setAttribute('id', key);
       keyElement.classList.add('keyboard__key');
       keyElement.textContent = layout[key].ru;
-      if (isDarkButton) keyElement.classList.add('keyboard__key--special');
-      if (isDoubleButton) keyElement.classList.add('keyboard__key--wide');
-      if (key === 'Space') keyElement.classList.add('keyboard__key--extra-wide');
+      if (isDarkButton) {
+        keyElement.classList.add('keyboard__key--special');
+      }
+
+      if (isDoubleButton) {
+        keyElement.classList.add('keyboard__key--wide');
+      }
+
+      if (key === 'Space') {
+        keyElement.classList.add('keyboard__key--extra-wide');
+      }
+
       keyElement.textContent = layout[key][this.properties.state];
 
       fragment.appendChild(keyElement);
@@ -107,39 +116,37 @@ const Keyboard = {
     });
 
     document.addEventListener('mouseout', (e) => {
-      e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
+        e.preventDefault();
         e.target.classList.remove('keyboard__key--mouse');
       }
     });
 
     window.addEventListener('keydown', (e) => {
-      e.preventDefault();
       const el = document.getElementById(e.code);
       if (el && el.classList.contains('keyboard__key')) {
+        e.preventDefault();
         el.classList.add('keyboard__key--mouse');
         this.eventChecker(e.code, e);
       }
     });
 
     window.addEventListener('keyup', (e) => {
-      e.preventDefault();
       const el = document.getElementById(e.code);
       if (el && el.classList.contains('keyboard__key')) {
+        e.preventDefault();
         el.classList.remove('keyboard__key--mouse');
         this.eventCheckerUp(e.code, e);
       }
     });
 
     document.addEventListener('mousedown', (e) => {
-      // e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
         this.eventChecker(e.target.id, e.target);
       }
     });
 
     document.addEventListener('mouseup', (e) => {
-      // e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
         this.eventCheckerUp(e.target.id, e.target);
       }
@@ -152,7 +159,7 @@ const Keyboard = {
     const keyElement = document.getElementById(key);
     switch (key) {
       case 'Backspace':
-        this.properties.value = this.properties.value.substring(0, this.properties.value.length - 1);
+        this.properties.value = this.properties.value.slice(0, -1);
         this.triggerEvent('oninput');
         break;
 
@@ -220,6 +227,7 @@ const Keyboard = {
 
   eventCheckerUp(key, e) {
     switch (key) {
+
       case 'ShiftRight':
         this.shiftUp();
         break;
@@ -241,23 +249,31 @@ const Keyboard = {
 
   switchLayout() {
     const st = this.properties.state.substr(0, 2);
+
     if (st !== 'ru') {
       this.properties.state = this.properties.state.replace('en', 'ru');
+
     } else {
       this.properties.state = this.properties.state.replace('ru', 'en');
     }
+
     this.toggleShift();
+
     sessionStorage.setItem('layout', this.properties.state);
   },
 
   toggleCapsLock() {
     this.properties.capsLock = !this.properties.capsLock;
+
     if (this.properties.capsLock) {
       this.properties.state = (`${this.properties.state}Shift`);
+
     } else {
       this.properties.state = this.properties.state.substr(0, 2);
     }
+
     this.toggleShift();
+
     sessionStorage.setItem('capsLock', this.properties.capsLock);
   },
 
