@@ -51,18 +51,24 @@ const Keyboard = {
     // Create main elements
     this.elements.main = document.createElement('div');
     this.elements.textarea = document.createElement('textarea');
+    this.elements.info = document.createElement('div');
     this.elements.keysContainer = document.createElement('div');
 
     // Setup main elements
     this.elements.main.classList.add('keyboard');
     this.elements.textarea.classList.add('keyboard-input');
+    this.elements.info.classList.add('kb-info');
     this.elements.keysContainer.classList.add('keyboard__keys');
     this.elements.keysContainer.appendChild(this.createKeys(keyLayout, layout, specialButtons, darkButtons));
     this.elements.keys = this.elements.keysContainer.querySelectorAll('.keyboard__key');
 
     // Add to DOM
     this.elements.main.appendChild(this.elements.textarea);
+    
     this.elements.main.appendChild(this.elements.keysContainer);
+    this.elements.main.appendChild(this.elements.info);
+    this.elements.info.textContent = '    press Ctrl + Shift to switch keyboard layout    ';
+
     document.body.appendChild(this.elements.main);
 
     // Connect keyboard for textarea

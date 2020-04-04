@@ -3,7 +3,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 70vh;
     background-color: rgb(224, 214, 251);
 }
 
@@ -19,7 +19,7 @@ body {
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
     user-select: none;
     border: 2px solid gray;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 10px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.9);
     flex-direction: column;
@@ -44,6 +44,15 @@ body {
     margin: 5px 20% 10px;
     box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.9);
     font-size: 2rem;
+}
+
+.kb-info {
+    width: auto;
+    height: auto;
+    align-items:center;
+    align-self:center;
+    margin-top: 4px;
+    padding-top: 4px;
 }
 
 .keyboard__keys {
@@ -74,7 +83,7 @@ body {
     border: 1px solid gray;
     border-radius: 3px;
     box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.9);
-    transition: background-color: 0.4s, color: 0.4s;
+    transition: background-color 0.4s, color 0.4s;
 }
 
 .keyboard__key :hover {
@@ -119,9 +128,11 @@ body {
 
 .keyboard__key--dark {
     background-color: rgba(0, 0, 0, 0.25);
-    transition: background-color: 0.3s;
+    transition: background-color 0.3s;
 }
 
 .keyboard__key--mouse {
     background-color: lightcoral;
+    font-weight: 700;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
 }
