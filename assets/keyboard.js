@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 /* eslint-disable linebreak-style */
 const Keyboard = {
   elements: {
@@ -21,17 +23,46 @@ const Keyboard = {
 
   init() {
     this.properties.state = (sessionStorage.getItem('layout')) ? sessionStorage.getItem('layout').substr(0, 2) : 'en';
-    // this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
+    this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
     // console.log(this.properties.state);
     // console.log(this.properties.capsLock);
-    // this.properties.value = sessionStorage.getItem('value') || '';
+    this.properties.value = sessionStorage.getItem('value') || '';
 
     // Create keys data arrays
-    const keyLayout = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Enter', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Backslash', 'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight', 'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight'];
-    const en = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', 'Enter', 'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '\\', 'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift', 'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶'];
-    const enShift = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', 'Enter', 'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '|', 'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '▲', 'Shift', 'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶'];
-    const ru = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace', 'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Enter', 'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', '\\', 'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'Shift', 'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶'];
-    const ruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace', 'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', 'Enter', 'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '/', 'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '▲', 'Shift', 'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶'];
+    const keyLayout = [
+      'Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace',
+      'Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Enter',
+      'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Backslash',
+      'ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight',
+      'ControlLeft', 'AltLeft', 'Space', 'AltRight', 'ControlRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight',
+    ];
+    const en = [
+      '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+      'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', 'Enter',
+      'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', '\\',
+      'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '▲', 'Shift',
+      'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶',
+    ];
+    const enShift = [
+      '~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace',
+      'Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', 'Enter',
+      'CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '|',
+      'Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '▲', 'Shift',
+      'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶',
+    ];
+    const ru = [
+      'ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
+      'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', 'Enter',
+      'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', '\\',
+      'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', '▲', 'Shift',
+      'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶',
+    ];
+    const ruShift = ['Ё', '!', '"', '№', ';', '%', ':', '?', '*', '(', ')', '_', '+', 'Backspace',
+      'Tab', 'Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Щ', 'З', 'Х', 'Ъ', 'Enter',
+      'CapsLock', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Ж', 'Э', '/',
+      'Shift', 'Я', 'Ч', 'С', 'М', 'И', 'Т', 'Ь', 'Б', 'Ю', ',', '▲', 'Shift',
+      'Ctrl', 'Alt', ' ', 'Alt', 'Ctrl', '◀', '▼', '▶',
+    ];
     const specialButtons = ['Tab', 'Backspace', 'CapsLock', 'Enter', 'ShiftLeft', 'ShiftRight', 'ControlLeft', 'Space', 'Backslash'];
     const darkButtons = ['Backquote', 'ArrowUp', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'AltLeft', 'AltRight', 'ControlRight'].concat(specialButtons);
 
@@ -59,12 +90,12 @@ const Keyboard = {
     this.elements.textarea.classList.add('keyboard-input');
     this.elements.info.classList.add('kb-info');
     this.elements.keysContainer.classList.add('keyboard__keys');
+    // eslint-disable-next-line max-len
     this.elements.keysContainer.appendChild(this.createKeys(keyLayout, layout, specialButtons, darkButtons));
     this.elements.keys = this.elements.keysContainer.querySelectorAll('.keyboard__key');
 
     // Add to DOM
     this.elements.main.appendChild(this.elements.textarea);
-    
     this.elements.main.appendChild(this.elements.keysContainer);
     this.elements.main.appendChild(this.elements.info);
     this.elements.info.textContent = '    press Ctrl + Shift to switch keyboard layout    ';
@@ -87,7 +118,7 @@ const Keyboard = {
       const isDoubleButton = (specialButtons.indexOf(key) !== -1);
       const isDarkButton = (darkButtons.indexOf(key) !== -1);
 
-      // Add attributes/classes
+      // Add attributes and classes
       keyElement.setAttribute('type', 'button');
       keyElement.setAttribute('id', key);
       keyElement.classList.add('keyboard__key');
@@ -125,6 +156,7 @@ const Keyboard = {
       if (e.target.classList.contains('keyboard__key')) {
         e.preventDefault();
         e.target.classList.remove('keyboard__key--mouse');
+        e.target.classList.remove('keyboard__key--down');
       }
     });
 
@@ -132,7 +164,7 @@ const Keyboard = {
       const el = document.getElementById(e.code);
       if (el && el.classList.contains('keyboard__key')) {
         e.preventDefault();
-        el.classList.add('keyboard__key--mouse');
+        el.classList.add('keyboard__key--down');
         this.eventChecker(e.code, e);
       }
     });
@@ -141,20 +173,25 @@ const Keyboard = {
       const el = document.getElementById(e.code);
       if (el && el.classList.contains('keyboard__key')) {
         e.preventDefault();
-        el.classList.remove('keyboard__key--mouse');
+        // el.classList.add('keyboard__key--down');
+        el.classList.remove('keyboard__key--down');
         this.eventCheckerUp(e.code, e);
       }
     });
 
     document.addEventListener('mousedown', (e) => {
       if (e.target.classList.contains('keyboard__key')) {
+        e.target.classList.remove('keyboard__key--mouse');
+        e.target.classList.add('keyboard__key--down');
         this.eventChecker(e.target.id, e.target);
       }
     });
 
     document.addEventListener('mouseup', (e) => {
       if (e.target.classList.contains('keyboard__key')) {
-        this.eventCheckerUp(e.target.id, e.target);
+        e.target.classList.remove('keyboard__key--down');
+        e.target.classList.add('keyboard__key--mouse');
+        // this.eventCheckerUp(e.target.id, e.target);
       }
     });
 
@@ -215,7 +252,10 @@ const Keyboard = {
         break;
 
       case 'ControlRight':
-        this.triggerEvent('oninput');
+        // this.triggerEvent('oninput');
+        if (e.shiftKey === true) {
+          this.switchLayout();
+        }
         break;
 
       case 'ControlLeft':
@@ -231,9 +271,8 @@ const Keyboard = {
     }
   },
 
-  eventCheckerUp(key, e) {
+  eventCheckerUp(key) {
     switch (key) {
-
       case 'ShiftRight':
         this.shiftUp();
         break;
@@ -258,7 +297,6 @@ const Keyboard = {
 
     if (st !== 'ru') {
       this.properties.state = this.properties.state.replace('en', 'ru');
-
     } else {
       this.properties.state = this.properties.state.replace('ru', 'en');
     }
@@ -273,19 +311,20 @@ const Keyboard = {
 
     if (this.properties.capsLock) {
       this.properties.state = (`${this.properties.state}Shift`);
-
     } else {
       this.properties.state = this.properties.state.substr(0, 2);
     }
 
     this.toggleShift();
 
+    // eslint-disable-next-line no-undef
     sessionStorage.setItem('capsLock', this.properties.capsLock);
   },
 
   toggleShift() {
     this.elements.keys.forEach((el) => {
       if (el.childElementCount === 0) {
+        // eslint-disable-next-line no-param-reassign
         el.textContent = this.layout[el.id][this.properties.state];
       }
     });
