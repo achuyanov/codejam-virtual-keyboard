@@ -1,5 +1,5 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable no-undef */
-
 /* eslint-disable linebreak-style */
 const Keyboard = {
   elements: {
@@ -23,10 +23,10 @@ const Keyboard = {
 
   init() {
     this.properties.state = (sessionStorage.getItem('layout')) ? sessionStorage.getItem('layout').substr(0, 2) : 'en';
-    //this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
+    // this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
     // console.log(this.properties.state);
     // console.log(this.properties.capsLock);
-    //this.properties.value = sessionStorage.getItem('value') || '';
+    // this.properties.value = sessionStorage.getItem('value') || '';
 
     // Create keys data arrays
     const keyLayout = [
@@ -98,7 +98,7 @@ const Keyboard = {
     this.elements.main.appendChild(this.elements.textarea);
     this.elements.main.appendChild(this.elements.keysContainer);
     this.elements.main.appendChild(this.elements.info);
-    this.elements.info.textContent = '    press Ctrl + Shift to switch keyboard layout (OS Windows)';
+    this.elements.info.textContent = '    press  Shift + Ctrl  or  Shift + Alt  to switch keyboard layout (OS Windows)';
 
     document.body.appendChild(this.elements.main);
 
@@ -106,13 +106,10 @@ const Keyboard = {
     this.open(document.querySelector('.keyboard-input').value, (currentValue) => {
       document.querySelector('.keyboard-input').value = currentValue;
     });
-
-
   },
 
 
   createKeys(keyLayout, layout, specialButtons, darkButtons) {
-
     const fragment = document.createDocumentFragment();
 
     keyLayout.forEach((key) => {
@@ -178,6 +175,7 @@ const Keyboard = {
         e.preventDefault();
         el.classList.remove('keyboard__key--down');
         this.eventCheckerUp(e.code, e);
+        this.properties.shiftPressed = false;
       }
     });
 
@@ -241,6 +239,12 @@ const Keyboard = {
 
       case 'ShiftRight':
         this.shiftDown();
+        if (e.ctrlKey === true) {
+          this.switchLayout();
+        }
+        if (e.altKey === true) {
+          this.switchLayout();
+        }
         break;
 
       case 'ShiftLeft':
@@ -248,7 +252,7 @@ const Keyboard = {
         if (e.ctrlKey === true) {
           this.switchLayout();
         }
-        if (e.altlKey === true) {
+        if (e.altKey === true) {
           this.switchLayout();
         }
         break;
@@ -271,7 +275,7 @@ const Keyboard = {
         this.triggerEvent('oninput');
         break;
     }
-    //this.updateStorage();
+    // this.updateStorage();
   },
 
   eventCheckerUp(key) {
@@ -287,7 +291,7 @@ const Keyboard = {
       default:
         break;
     }
-    //this.updateStorage();
+    // this.updateStorage();
   },
 
   triggerEvent(handlerName) {
@@ -305,8 +309,7 @@ const Keyboard = {
       this.properties.state = this.properties.state.replace('ru', 'en');
     }
 
-    this.toggleShift();
-
+    //Sthis.toggleShift();
     this.updateStorage();
   },
 
@@ -320,22 +323,24 @@ const Keyboard = {
     }
 
     this.toggleShift();
-    //this.updateStorage();
+    // this.updateStorage();
   },
 
   toggleShift() {
     this.elements.keys.forEach((el) => {
       if (el.childElementCount === 0) {
+        // eslint-disable-next-line no-param-reassign
         el.textContent = this.layout[el.id][this.properties.state];
       }
-      //this.updateStorage();
+      this.properties.lastState = this.properties.state;
     });
   },
 
   shiftDown() {
     if (!this.properties.capsLock) {
+      // eslint-disable-next-line no-cond-assign
       if (this.properties.state.length = 2) this.properties.state = (`${this.properties.state}Shift`);
-      //this.updateStorage();
+      // this.updateStorage();
       this.toggleShift();
     }
   },
@@ -343,7 +348,7 @@ const Keyboard = {
   shiftUp() {
     if (!this.properties.capsLock) {
       this.properties.state = this.properties.state.substr(0, 2);
-      //this.updateStorage();
+      // this.updateStorage();
       this.toggleShift();
     }
   },
@@ -355,10 +360,10 @@ const Keyboard = {
   },
 
   updateStorage() {
-    //sessionStorage.setItem('value', this.properties.value);
-    //sessionStorage.setItem('capsLock', this.properties.capsLock);
+    // sessionStorage.setItem('value', this.properties.value);
+    // sessionStorage.setItem('capsLock', this.properties.capsLock);
     sessionStorage.setItem('state', this.properties.state);
-    //sessionStorage.setItem('layout', this.properties.layout);
+    // sessionStorage.setItem('layout', this.properties.layout);
   },
 
   close() {
