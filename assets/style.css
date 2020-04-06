@@ -110,7 +110,7 @@ body {
     background-color: lightblue;
 }
 
-.keyboard__key--activatable::after {
+.keyboard__key--onoff::after {
     content: '';
     top: 35px;
     right: 25%;

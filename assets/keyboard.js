@@ -17,16 +17,16 @@ const Keyboard = {
   properties: {
     value: '',
     capsLock: false,
-    state: 'en', // 'en', 'enShift', 'ru', 'ruShift'
-    layout: {},
+    state: 'en', // 'en', 'ru'
+    layout: 'en', // 'en', 'enShift', 'ru', 'ruShift'
   },
 
   init() {
     this.properties.state = (sessionStorage.getItem('layout')) ? sessionStorage.getItem('layout').substr(0, 2) : 'en';
-    this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
+    //this.properties.capsLock = sessionStorage.getItem('capsLock') || false;
     // console.log(this.properties.state);
     // console.log(this.properties.capsLock);
-    this.properties.value = sessionStorage.getItem('value') || '';
+    //this.properties.value = sessionStorage.getItem('value') || '';
 
     // Create keys data arrays
     const keyLayout = [
@@ -98,7 +98,7 @@ const Keyboard = {
     this.elements.main.appendChild(this.elements.textarea);
     this.elements.main.appendChild(this.elements.keysContainer);
     this.elements.main.appendChild(this.elements.info);
-    this.elements.info.textContent = '    press Ctrl + Shift to switch keyboard layout    ';
+    this.elements.info.textContent = '    press Ctrl + Shift to switch keyboard layout (OS Windows)';
 
     document.body.appendChild(this.elements.main);
 
@@ -106,10 +106,13 @@ const Keyboard = {
     this.open(document.querySelector('.keyboard-input').value, (currentValue) => {
       document.querySelector('.keyboard-input').value = currentValue;
     });
+
+
   },
 
 
   createKeys(keyLayout, layout, specialButtons, darkButtons) {
+
     const fragment = document.createDocumentFragment();
 
     keyLayout.forEach((key) => {
@@ -144,17 +147,17 @@ const Keyboard = {
       }
     });
 
-
-    document.addEventListener('mouseover', (e) => {
+    window.addEventListener('mouseover', (e) => {
       e.preventDefault();
       if (e.target.classList.contains('keyboard__key')) {
         e.target.classList.add('keyboard__key--mouse');
       }
     });
 
-    document.addEventListener('mouseout', (e) => {
+    window.addEventListener('mouseout', (e) => {
       if (e.target.classList.contains('keyboard__key')) {
         e.preventDefault();
+        this.shiftUp();
         e.target.classList.remove('keyboard__key--mouse');
         e.target.classList.remove('keyboard__key--down');
       }
@@ -173,13 +176,12 @@ const Keyboard = {
       const el = document.getElementById(e.code);
       if (el && el.classList.contains('keyboard__key')) {
         e.preventDefault();
-        // el.classList.add('keyboard__key--down');
         el.classList.remove('keyboard__key--down');
         this.eventCheckerUp(e.code, e);
       }
     });
 
-    document.addEventListener('mousedown', (e) => {
+    window.addEventListener('mousedown', (e) => {
       if (e.target.classList.contains('keyboard__key')) {
         e.target.classList.remove('keyboard__key--mouse');
         e.target.classList.add('keyboard__key--down');
@@ -187,11 +189,11 @@ const Keyboard = {
       }
     });
 
-    document.addEventListener('mouseup', (e) => {
+    window.addEventListener('mouseup', (e) => {
       if (e.target.classList.contains('keyboard__key')) {
         e.target.classList.remove('keyboard__key--down');
         e.target.classList.add('keyboard__key--mouse');
-        // this.eventCheckerUp(e.target.id, e.target);
+        this.eventCheckerUp(e.target.id, e.target);
       }
     });
 
@@ -207,7 +209,7 @@ const Keyboard = {
         break;
 
       case 'CapsLock':
-        keyElement.classList.add('keyboard__key--activatable');
+        keyElement.classList.add('keyboard__key--onoff');
         this.toggleCapsLock();
         keyElement.classList.toggle('keyboard__key--active', this.properties.capsLock);
         break;
@@ -269,6 +271,7 @@ const Keyboard = {
         this.triggerEvent('oninput');
         break;
     }
+    //this.updateStorage();
   },
 
   eventCheckerUp(key) {
@@ -284,6 +287,7 @@ const Keyboard = {
       default:
         break;
     }
+    //this.updateStorage();
   },
 
   triggerEvent(handlerName) {
@@ -303,7 +307,7 @@ const Keyboard = {
 
     this.toggleShift();
 
-    sessionStorage.setItem('layout', this.properties.state);
+    this.updateStorage();
   },
 
   toggleCapsLock() {
@@ -316,23 +320,22 @@ const Keyboard = {
     }
 
     this.toggleShift();
-
-    // eslint-disable-next-line no-undef
-    sessionStorage.setItem('capsLock', this.properties.capsLock);
+    //this.updateStorage();
   },
 
   toggleShift() {
     this.elements.keys.forEach((el) => {
       if (el.childElementCount === 0) {
-        // eslint-disable-next-line no-param-reassign
         el.textContent = this.layout[el.id][this.properties.state];
       }
+      //this.updateStorage();
     });
   },
 
   shiftDown() {
     if (!this.properties.capsLock) {
-      this.properties.state = (`${this.properties.state}Shift`);
+      if (this.properties.state.length = 2) this.properties.state = (`${this.properties.state}Shift`);
+      //this.updateStorage();
       this.toggleShift();
     }
   },
@@ -340,6 +343,7 @@ const Keyboard = {
   shiftUp() {
     if (!this.properties.capsLock) {
       this.properties.state = this.properties.state.substr(0, 2);
+      //this.updateStorage();
       this.toggleShift();
     }
   },
@@ -348,7 +352,13 @@ const Keyboard = {
     this.properties.value = initialValue || '';
     this.eventHandlers.oninput = oninput;
     this.eventHandlers.onclose = onclose;
-    // sessionStorage.setItem('value', this.properties.value);
+  },
+
+  updateStorage() {
+    //sessionStorage.setItem('value', this.properties.value);
+    //sessionStorage.setItem('capsLock', this.properties.capsLock);
+    sessionStorage.setItem('state', this.properties.state);
+    //sessionStorage.setItem('layout', this.properties.layout);
   },
 
   close() {
