@@ -113,12 +113,12 @@ body {
 .keyboard__key--onoff::after {
     content: '';
     top: 35px;
-    right: 25%;
+    right: 15%;
     position: absolute;
-    width: 50%;
-    height: 3px;
+    width: 70%;
+    height: 4px;
     background-color: rgba(0, 0, 0, 0.4);
-    border-radius: 1px;
+    border-radius: 2px;
 }
 
 .keyboard__key--active::after {
