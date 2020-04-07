@@ -109,7 +109,7 @@ body {
     position: absolute;
     width: 50%;
     height: 3px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.3);
     border-radius: 1px;
 }
 
